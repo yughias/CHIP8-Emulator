@@ -23,7 +23,7 @@ void closeBuzzer(){
 
 void playBeep(){
     const int PERIOD = 500;
-    size_t sample_size = audio_spec.freq/frameRate;
+    const size_t sample_size = audio_spec.freq/frameRate;
     uint8_t sample[sample_size];
     
     for(int i = 0; i < sample_size; i++)

@@ -9,6 +9,8 @@ void setup(){
     srand(time(NULL)); 
     size(CH8_W*10, CH8_H*10);
     frameRate(60);
+    setTitle("CHIP-8 EMULATOR");
+    
     initBuzzer();
     initChip8();
     const char* filename = selectFile();

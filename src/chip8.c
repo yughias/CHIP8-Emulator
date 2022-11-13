@@ -52,11 +52,11 @@ void cpuTimers(){
 }
 
 void RunOpcode(){
-    int opcode = (memory[PC] << 8) | memory[PC+1];
-    unsigned char first = (opcode & 0xF000) >> 12;
-    unsigned char second = (opcode & 0xF00) >> 8;
-    unsigned char third = (opcode & 0xF0) >> 4;
-    unsigned char fourth = opcode & 0xF;
+    uint16_t opcode = (memory[PC] << 8) | memory[PC+1];
+    uint8_t first = (opcode & 0xF000) >> 12;
+    uint8_t second = (opcode & 0xF00) >> 8;
+    uint8_t third = (opcode & 0xF0) >> 4;
+    uint8_t fourth = opcode & 0xF;
     
     if(first == 0x0){
         if(second == 0x0){
@@ -111,7 +111,7 @@ void RunOpcode(){
     }
     if(first == 0x7){
         //7XNN
-        V[second] = (V[second] + (opcode & 0xFF)) % 256;
+        V[second] += (opcode & 0xFF);
     }
     if(first == 0x8){
         if(fourth == 0x0){
@@ -132,43 +132,43 @@ void RunOpcode(){
         }
         if(fourth == 0x4){
             //8XY4
-            if((int)(V[second])+(int)(V[third]) > 255)
-                V[0xF] = 1;
-            else
-                V[0xF] = 0;
-            V[second] = V[second]+V[third];
+            bool flag = false;
+            if((V[second])+(V[third]) > 255)
+                flag = true;
+            V[second] += V[third];
+            V[0xF] = flag;
         }
         if(fourth == 0x5){
             //8XY5
+            bool flag = false;
             if(V[second] > V[third])
-                V[0xF] = 1;
-            else
-                V[0xF] = 0;
-            V[second] = V[second] - V[third];
+                flag = true;
+            V[second] -= V[third];
+            V[0xF] = flag;
         }
         if(fourth == 0x6){
             //8XY6
-            if((V[second] & 0x1) == 1)
-                V[0xF] = 1;
-            else
-                V[0xF] = 0;
+            bool flag = false;
+            if(V[second] & 0x01)
+                flag = true;
             V[second] = V[second] >> 1;
+            V[0xF] = flag;
         }
         if(fourth == 0x7){
             //8XY7
+            bool flag = false;
             if(V[third] > V[second])
-                V[0xF] = 1;
-            else
-                V[0xF] = 0;
+                flag = true;
             V[second] = V[third] - V[second];
+            V[0xF] = flag;
         }
         if(fourth == 0xE){
             //8XYE
-            if((V[second] & 0b10000000) != 0)
-                V[0xF] = 1;
-            else
-                V[0xF] = 0;
+            bool flag = false;
+            if(V[second] & 0x80)
+                flag = true;
             V[second] = V[second] << 1;
+            V[0xF] = flag;
         }
     }
     if(first == 0x9){
