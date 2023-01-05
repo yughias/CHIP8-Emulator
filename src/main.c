@@ -50,5 +50,5 @@ void render(){
 
 const char* selectFile(){
     const char* file_ext[1] = { "*.ch8" };
-    return tinyfd_openFileDialog("select ROM", "./", 1, file_ext, NULL, 0);
+    return tinyfd_openFileDialog("select ROM", "ROMs/", 1, file_ext, NULL, 0);
 }
