@@ -1,8 +1,24 @@
 #include "chip8.h"
 
+uint8_t memory[MEMORY_SIZE];
+bool display[CH8_W*CH8_H];
+
+uint16_t PC;
+uint16_t I;
+
+uint8_t V[16];
+uint8_t ST;
+uint8_t DT;
+
+uint16_t stack[STACKSIZE];
+size_t stackIndex;
+
+bool keyState[16];
+bool prev_keyState[16];
+
 void initChip8(){
     memset(memory, 0, MEMORY_SIZE);
-    memset(V, 0, sizeof(uint16_t)*16);
+    memset(V, 0, sizeof(uint8_t)*16);
     memset(display, 0, CH8_W*CH8_H);
     memset(stack, 0, sizeof(uint16_t)*STACKSIZE);
 

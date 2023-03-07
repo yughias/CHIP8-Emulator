@@ -10,21 +10,21 @@
 #define CH8_W       64
 #define CH8_H       32
 
-uint8_t memory[MEMORY_SIZE];
-bool display[CH8_W*CH8_H];
+extern uint8_t memory[MEMORY_SIZE];
+extern bool display[CH8_W*CH8_H];
 
-uint16_t PC;
-uint16_t I;
+extern uint16_t PC;
+extern uint16_t I;
 
-uint8_t V[16];
-uint8_t ST;
-uint8_t DT;
+extern uint8_t V[16];
+extern uint8_t ST;
+extern uint8_t DT;
 
-uint16_t stack[STACKSIZE];
-size_t stackIndex;
+extern uint16_t stack[STACKSIZE];
+extern size_t stackIndex;
 
-bool keyState[16];
-bool prev_keyState[16];
+extern bool keyState[16];
+extern bool prev_keyState[16];
 
 void initChip8();
 void loadROM(const char*);
